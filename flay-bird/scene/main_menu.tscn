@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://cihre4bqwam0t"]
+
+[ext_resource type="Script" uid="uid://dohda4gmd8bma" path="res://scene/main_menu.gd" id="1_0iwki"]
+[ext_resource type="Texture2D" uid="uid://crk24hl1x0rwi" path="res://assets/bg.png" id="1_2fwvj"]
+[ext_resource type="Texture2D" uid="uid://c0cgv274ouwf6" path="res://assets/play.png" id="2_0iwki"]
+[ext_resource type="Texture2D" uid="uid://bpi0pskmkb8cs" path="res://assets/quit.png" id="3_sepwh"]
+[ext_resource type="Texture2D" uid="uid://bftgv48lc3raw" path="res://assets/ground.png" id="5_sepwh"]
+
+[sub_resource type="SystemFont" id="SystemFont_lpnis"]
+
+[node name="MainMenu" type="Control" unique_id=366712386]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_0iwki")
+
+[node name="Latar" type="Sprite2D" parent="." unique_id=823212224]
+position = Vector2(432, 385)
+texture = ExtResource("1_2fwvj")
+
+[node name="TitleLabel" type="Label" parent="." unique_id=1299934297]
+z_index = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 301.0
+offset_top = 211.0
+offset_right = 547.0
+offset_bottom = 266.0
+grow_horizontal = 2
+theme_override_fonts/font = SubResource("SystemFont_lpnis")
+theme_override_font_sizes/font_size = 40
+text = "FLAPPY BIRD"
+
+[node name="QUIT" type="Button" parent="." unique_id=577534075]
+layout_mode = 0
+offset_left = 374.0
+offset_top = 353.0
+offset_right = 502.0
+offset_bottom = 403.0
+icon = ExtResource("3_sepwh")
+
+[node name="PLAY" type="Button" parent="." unique_id=269439260]
+layout_mode = 0
+offset_left = 375.0
+offset_top = 290.0
+offset_right = 503.0
+offset_bottom = 340.0
+icon = ExtResource("2_0iwki")
+
+[node name="Ground" type="Sprite2D" parent="." unique_id=1805844659]
+position = Vector2(863, 852)
+texture = ExtResource("5_sepwh")
+
+[connection signal="pressed" from="QUIT" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="PLAY" to="." method="_on_play_pressed"]
