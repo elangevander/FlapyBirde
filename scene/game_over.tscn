@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://by0h2lvk3x1qm"]
+
+[ext_resource type="Texture2D" uid="uid://6x513ijjqusw" path="res://assets/restart.png" id="1_8uq5u"]
+[ext_resource type="Script" uid="uid://b3isfjws36rtu" path="res://scene/game_over.gd" id="1_mxr41"]
+[ext_resource type="Texture2D" uid="uid://b0r6xh31jqdix" path="res://assets/menu.png" id="3_bc2bx"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kd8p3"]
+texture = ExtResource("1_8uq5u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mxr41"]
+texture = ExtResource("1_8uq5u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bc2bx"]
+texture = ExtResource("1_8uq5u")
+
+[node name="GameOver" type="CanvasLayer" unique_id=1097415702]
+script = ExtResource("1_mxr41")
+
+[node name="RestartButton" type="Button" parent="." unique_id=76721017]
+offset_left = 342.0
+offset_top = 350.0
+offset_right = 502.0
+offset_bottom = 413.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_kd8p3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mxr41")
+theme_override_styles/hover = SubResource("StyleBoxTexture_bc2bx")
+
+[node name="MenuButton" type="Button" parent="." unique_id=1333968315]
+offset_left = 359.0
+offset_top = 435.0
+offset_right = 487.0
+offset_bottom = 485.0
+icon = ExtResource("3_bc2bx")
+
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]
