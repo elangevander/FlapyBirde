@@ -29,4 +29,4 @@ offset_bottom = 104.0
 theme_override_font_sizes/font_size = 32
 
 [connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]
-[connection signal="pressed" from="RestartButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
