@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cjpolshif7pr0"]
+
+[ext_resource type="PackedScene" uid="uid://nb5h6n4ckmnf" path="res://scene/pipe.tscn" id="1_k27vd"]
+[ext_resource type="Script" uid="uid://cyqv51hf83nqs" path="res://script/moving_pipe.gd" id="2_yfp0u"]
+
+[node name="Pipe" unique_id=1191688853 instance=ExtResource("1_k27vd")]
+script = ExtResource("2_yfp0u")

@@ -13,9 +13,9 @@ func move(amount: float)->void:
 func is_offscreen() -> bool:
 	return position.x < -200
 
-func _on_body_entered(body: Node2D)-> void:
+func _on_body_entered(_body: Node2D)-> void:
 	hit.emit()
 	
-func _on_score_area_body_entered(body: Node2D) -> void:
+func _on_score_area_body_entered(_body: Node2D) -> void:
 	scored.emit()
 	

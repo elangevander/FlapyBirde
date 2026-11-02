@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cihre4bqwam0t"]
 
-[ext_resource type="Script" uid="uid://dohda4gmd8bma" path="res://scene/main_menu.gd" id="1_0iwki"]
 [ext_resource type="Texture2D" uid="uid://crk24hl1x0rwi" path="res://assets/bg.png" id="1_2fwvj"]
+[ext_resource type="Script" uid="uid://dohda4gmd8bma" path="res://script/main_menu.gd" id="1_sepwh"]
 [ext_resource type="Texture2D" uid="uid://c0cgv274ouwf6" path="res://assets/play.png" id="2_0iwki"]
-[ext_resource type="Texture2D" uid="uid://bpi0pskmkb8cs" path="res://assets/quit.png" id="3_sepwh"]
+[ext_resource type="Texture2D" uid="uid://cfbflhgk4ilg2" path="res://assets/quit.png" id="3_sepwh"]
 [ext_resource type="Texture2D" uid="uid://bftgv48lc3raw" path="res://assets/ground.png" id="5_sepwh"]
 
 [sub_resource type="SystemFont" id="SystemFont_lpnis"]
@@ -13,7 +13,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_0iwki")
+script = ExtResource("1_sepwh")
 
 [node name="Latar" type="Sprite2D" parent="." unique_id=823212224]
 position = Vector2(432, 385)

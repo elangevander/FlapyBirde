@@ -56,8 +56,11 @@ func _process(delta):
 		if scroll >= screen_size.x:
 			scroll = 0
 		$Ground.position.x = -scroll
-		for pipe in pipes:
-			pipe.position.x -= SCROLL_SPEED
+		for pipe in pipes.duplicate():
+			pipe.move(SCROLL_SPEED)
+			if pipe.is_offscreen():
+				pipes.erase(pipe)
+				pipe.queue_free()
 
 
 func _on_pipe_timer_timeout():
