@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://byf80mwf3snwb"]
+
+[ext_resource type="Texture2D" uid="uid://crk24hl1x0rwi" path="res://assets/bg.png" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://ylngbrib32kq" path="res://scene/main.gd" id="1_wp4xf"]
+[ext_resource type="PackedScene" uid="uid://nb5h6n4ckmnf" path="res://scene/pipe.tscn" id="2_0ha60"]
+[ext_resource type="PackedScene" uid="uid://rdcpk3fro35n" path="res://scene/bird.tscn" id="2_v0l8b"]
+[ext_resource type="PackedScene" uid="uid://cjajj7in1jgf8" path="res://scene/ground.tscn" id="4_brvut"]
+[ext_resource type="PackedScene" uid="uid://by0h2lvk3x1qm" path="res://scene/game_over.tscn" id="6_4j5ol"]
+
+[node name="Main" type="Node" unique_id=1559043077]
+script = ExtResource("1_wp4xf")
+pipe_scene = ExtResource("2_0ha60")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=517944429]
+texture = ExtResource("1_ig7tw")
+offset = Vector2(432, 384)
+
+[node name="Bird" parent="." unique_id=126759477 instance=ExtResource("2_v0l8b")]
+
+[node name="Ground" parent="." unique_id=701539437 instance=ExtResource("4_brvut")]
+z_index = 1
+
+[node name="PipeTimer" type="Timer" parent="." unique_id=41904451]
+wait_time = 1.5
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=155511112]
+z_index = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -34.5
+offset_right = 34.5
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "SCORE: 0"
+
+[node name="GameOver" parent="." unique_id=1097415702 instance=ExtResource("6_4j5ol")]
+
+[node name="StartLabel" type="Label" parent="." unique_id=1918794036]
+z_index = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -208.0
+offset_top = -190.0
+offset_right = 205.0
+offset_bottom = -145.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "KLIK KIRI UNTUK MEMULAI"
+
+[connection signal="hit" from="Ground" to="." method="_on_ground_hit"]
+[connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]
+[connection signal="restart" from="GameOver" to="." method="_on_game_over_restart"]

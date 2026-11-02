@@ -1,4 +1,3 @@
-class_name Ground
 extends Area2D
 
 signal hit

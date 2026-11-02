@@ -25,7 +25,6 @@ func new_game():
 	scroll = 0
 	$Ground.position.x = 0
 	$ScoreLabel.text = "SCORE: " + str(score)
-	$HighScoreLabel.text = "BEST: " + str(SaveManager.high_score)
 	$StartLabel.show()
 	$GameOver.hide()
 	get_tree().call_group("pipes", "queue_free")
@@ -42,7 +41,6 @@ func _input(event):
 				else:
 					if $Bird.flying:
 						$Bird.flap()
-						AudioManager.play("flap")
 						check_top()
 
 func start_game():
@@ -50,7 +48,6 @@ func start_game():
 	$Bird.flying = true
 	$StartLabel.hide()
 	$Bird.flap()
-	AudioManager.play("flap")
 	$PipeTimer.start()
 	
 func _process(delta):
@@ -59,13 +56,9 @@ func _process(delta):
 		if scroll >= screen_size.x:
 			scroll = 0
 		$Ground.position.x = -scroll
-		if pipes.size() > 0:
-			print("x pipa pertama: ", pipes[0].position.x)
-		for pipe in pipes.duplicate():
-			pipe.move(SCROLL_SPEED)
-			if pipe.is_offscreen():
-				pipes.erase(pipe)
-				pipe.queue_free()
+		for pipe in pipes:
+			pipe.position.x -= SCROLL_SPEED
+
 
 func _on_pipe_timer_timeout():
 	generate_pipes()
@@ -77,12 +70,10 @@ func generate_pipes():
 	pipe.hit.connect(bird_hit)
 	pipe.scored.connect(scored)
 	add_child(pipe)
-	print("pipa dibuat di: ", pipe.position)
 	pipes.append(pipe)
 	
 func scored():
 	score += 1
-	AudioManager.play("score")
 	$ScoreLabel.text = "SCORE: " + str(score)
 		
 	
@@ -92,10 +83,6 @@ func check_top():
 		stop_game()
 	
 func stop_game():
-	if not game_over:
-		AudioManager.play("hit")
-	SaveManager.submit_score(score)
-	$HighScoreLabel.text = "BEST: " + str(SaveManager.high_score)
 	$PipeTimer.stop()
 	$GameOver.show()
 	$Bird.flying = false
