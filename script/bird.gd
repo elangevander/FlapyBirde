@@ -13,6 +13,7 @@ func reset():
 	velocity = Vector2.ZERO
 	position = START_POS
 	set_rotation(0)
+	$AnimatedSprite2D.modulate = Color.WHITE
 	
 func _ready():
 	reset()
@@ -34,4 +35,6 @@ func _physics_process(delta):
 	
 func flap():
 	velocity.y = FLAP_SPEED
+	AudioManager.play_sfx("flap", 0.05)
+	Fx.squash($AnimatedSprite2D)
 	

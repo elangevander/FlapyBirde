@@ -21,5 +21,12 @@ offset_right = 484.0
 offset_bottom = 398.0
 icon = ExtResource("1_8uq5u")
 
+[node name="HighScoreLabel" type="Label" parent="." unique_id=64372199]
+offset_left = 284.0
+offset_top = 59.0
+offset_right = 324.0
+offset_bottom = 104.0
+theme_override_font_sizes/font_size = 32
+
 [connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="pressed" from="RestartButton" to="." method="_on_menu_button_pressed"]

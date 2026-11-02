@@ -14,9 +14,13 @@ const PIPE_DELAY : int = 100
 const PIPE_RANGE : int = 200
 
 func _ready():
+	print("1 ready mulai")
 	screen_size = get_window().size
+	print("2 screen_size ok")
 	ground_height = $Ground.get_node("Sprite2D").texture.get_height()
+	print("3 ground ok")
 	new_game()
+	print("4 selesai")
 	
 func new_game():
 	game_running = false
@@ -24,15 +28,24 @@ func new_game():
 	score = 0
 	scroll = 0
 	$Ground.position.x = 0
+	print("a")
 	$ScoreLabel.text = "SCORE: " + str(score)
 	$StartLabel.show()
+	print("b")
+	Fx.pulse($StartLabel)
+	print("c")
 	$GameOver.hide()
 	get_tree().call_group("pipes", "queue_free")
 	pipes.clear()
+	print("d")
 	generate_pipes()
+	print("e")
 	$Bird.reset()
+	print("f")
 	
 func _input(event):
+	if event is InputEventKey and event.pressed and event.keycode == KEY_M:
+		AudioManager.toggle_mute()
 	if game_over == false:
 		if event is InputEventMouseButton:
 			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
@@ -44,6 +57,7 @@ func _input(event):
 						check_top()
 
 func start_game():
+	AudioManager.play_music()
 	game_running = true
 	$Bird.flying = true
 	$StartLabel.hide()
@@ -78,6 +92,8 @@ func generate_pipes():
 func scored():
 	score += 1
 	$ScoreLabel.text = "SCORE: " + str(score)
+	AudioManager.play_sfx("score")
+	Fx.pop($ScoreLabel)
 		
 	
 func check_top():
@@ -86,8 +102,14 @@ func check_top():
 		stop_game()
 	
 func stop_game():
+	if game_over:
+		return
+	var is_new_best := SaveManager.submit_score(score)
+	AudioManager.play_sfx("hit")
+	AudioManager.stop_music()
+	Fx.flash($Bird/AnimatedSprite2D)
 	$PipeTimer.stop()
-	$GameOver.show()
+	$GameOver.show_animated(score, SaveManager.high_score, is_new_best)
 	$Bird.flying = false
 	game_running = false
 	game_over = true
