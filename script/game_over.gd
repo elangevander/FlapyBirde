@@ -9,6 +9,8 @@ var _base_y: Dictionary = {} # posisi y asli tiap Control
 
 
 func _ready() -> void:
+	EventBus.game_ended.connect(show_animated)
+	EventBus.game_ready.connect(hide)
 	for child in get_children():
 		if child is Control:
 			_base_y[child] = child.position.y

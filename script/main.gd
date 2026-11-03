@@ -28,20 +28,11 @@ func new_game():
 	score = 0
 	scroll = 0
 	$Ground.position.x = 0
-	print("a")
-	$ScoreLabel.text = "SCORE: " + str(score)
-	$StartLabel.show()
-	print("b")
-	Fx.pulse($StartLabel)
-	print("c")
-	$GameOver.hide()
+	EventBus.game_ready.emit()
 	get_tree().call_group("pipes", "queue_free")
 	pipes.clear()
-	print("d")
 	generate_pipes()
-	print("e")
 	$Bird.reset()
-	print("f")
 	
 func _input(event):
 	if event is InputEventKey and event.pressed and event.keycode == KEY_M:
@@ -60,7 +51,7 @@ func start_game():
 	AudioManager.play_music()
 	game_running = true
 	$Bird.flying = true
-	$StartLabel.hide()
+	EventBus.game_started.emit()
 	$Bird.flap()
 	$PipeTimer.start()
 	
@@ -91,10 +82,8 @@ func generate_pipes():
 	
 func scored():
 	score += 1
-	$ScoreLabel.text = "SCORE: " + str(score)
+	EventBus.score_changed.emit(score)
 	AudioManager.play_sfx("score")
-	Fx.pop($ScoreLabel)
-		
 	
 func check_top():
 	if $Bird.position.y < 0:
@@ -109,7 +98,7 @@ func stop_game():
 	AudioManager.stop_music()
 	Fx.flash($Bird/AnimatedSprite2D)
 	$PipeTimer.stop()
-	$GameOver.show_animated(score, SaveManager.high_score, is_new_best)
+	EventBus.game_ended.emit(score, SaveManager.high_score, is_new_best)
 	$Bird.flying = false
 	game_running = false
 	game_over = true

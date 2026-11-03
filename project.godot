@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SaveManager="*uid://d4g54ohrhhxid"
 AudioManager="*uid://ba8xipe1pplmk"
+EventBus="*uid://c3riwdyfnjelm"
 
 [display]
 
@@ -26,6 +27,10 @@ window/size/viewport_width=864
 window/size/viewport_height=936
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[gui]
+
+theme/custom="uid://uam82xbh4h7n"
 
 [physics]
 

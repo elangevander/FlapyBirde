@@ -7,6 +7,7 @@ const SFX_PATHS := {
 	"flap": "res://audio/flap.wav",
 	"score": "res://audio/score.wav",
 	"hit": "res://audio/hit.wav",
+	"click" : "res://audio/click.wav"
 }
 const MUSIC_PATH := "res://audio/music.wav"
 const POOL_SIZE := 6 # jumlah SFX yang bisa bunyi bersamaan

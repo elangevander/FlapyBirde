@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cuwlbv58i6hlv" path="res://assets/restart.png" id="1_8uq5u"]
 [ext_resource type="Script" uid="uid://b3isfjws36rtu" path="res://script/game_over.gd" id="1_mxr41"]
+[ext_resource type="Script" uid="uid://ckem56ype7ugu" path="res://script/ui_button.gd" id="3_6pabp"]
 [ext_resource type="Texture2D" uid="uid://ccbh5ya5uscor" path="res://assets/menu.png" id="3_bc2bx"]
 
 [node name="GameOver" type="CanvasLayer" unique_id=1097415702]
@@ -13,6 +14,7 @@ offset_top = 435.0
 offset_right = 487.0
 offset_bottom = 485.0
 icon = ExtResource("3_bc2bx")
+script = ExtResource("3_6pabp")
 
 [node name="RestartButton" type="Button" parent="." unique_id=734345610]
 offset_left = 356.0
@@ -20,6 +22,7 @@ offset_top = 348.0
 offset_right = 484.0
 offset_bottom = 398.0
 icon = ExtResource("1_8uq5u")
+script = ExtResource("3_6pabp")
 
 [node name="HighScoreLabel" type="Label" parent="." unique_id=64372199]
 offset_left = 284.0
