@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://chb7t3ne8weip" path="res://script/obstacle_spawner.gd" id="8_b5f6u"]
 [ext_resource type="Script" uid="uid://db180pxvaw3br" path="res://script/hud.gd" id="8_of57s"]
 [ext_resource type="PackedScene" uid="uid://cjpolshif7pr0" path="res://scene/moving_pipe.tscn" id="10_tqoya"]
+[ext_resource type="PackedScene" uid="uid://cpj667f33bnpl" path="res://scene/musuh.tscn" id="11_wscrc"]
+[ext_resource type="PackedScene" uid="uid://b8phg0oiak5lf" path="res://scene/peluru.tscn" id="12_mswub"]
 
 [node name="Main" type="Node" unique_id=1559043077]
 script = ExtResource("1_0ha60")
@@ -32,6 +34,11 @@ script = ExtResource("8_of57s")
 [node name="ObstacleSpawner" type="Node" parent="." unique_id=1750765335]
 script = ExtResource("8_b5f6u")
 obstacle_scenes = Array[PackedScene]([ExtResource("2_0ha60"), ExtResource("10_tqoya")])
+
+[node name="musuh" parent="." unique_id=560343196 node_paths=PackedStringArray("bird_node") instance=ExtResource("11_wscrc")]
+position = Vector2(841, 322)
+bird_node = NodePath("../Bird")
+peluru_scene = ExtResource("12_mswub")
 
 [connection signal="hit" from="Ground" to="." method="_on_ground_hit"]
 [connection signal="restart" from="GameOver" to="." method="_on_game_over_restart"]

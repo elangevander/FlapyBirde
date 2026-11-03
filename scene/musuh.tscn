@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cpj667f33bnpl"]
+
+[ext_resource type="Script" uid="uid://d08hjhjdbceqp" path="res://script/musuh.gd" id="1_weocx"]
+[ext_resource type="Texture2D" uid="uid://bvp50w3sv1fqp" path="res://assets/musuh1.png" id="2_kxlw3"]
+[ext_resource type="Texture2D" uid="uid://cmwvm803lt0o5" path="res://assets/musuh2.png" id="3_iglv5"]
+[ext_resource type="Texture2D" uid="uid://kcp38kojx462" path="res://assets/musuh3.png" id="4_m3jir"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_weocx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kxlw3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_iglv5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_m3jir")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iglv5"]
+radius = 19.026299
+
+[node name="musuh" type="Area2D" unique_id=560343196]
+script = ExtResource("1_weocx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1710721628]
+scale = Vector2(1.4375, 1.546875)
+sprite_frames = SubResource("SpriteFrames_weocx")
+frame_progress = 0.5622594
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2075819420]
+shape = SubResource("CircleShape2D_iglv5")
+
+[node name="Timer" type="Timer" parent="." unique_id=799954550]
+wait_time = 2.5
+autostart = true
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=1695587663]
+target_position = Vector2(-250, 0)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://b8phg0oiak5lf"]
+
+[ext_resource type="Script" uid="uid://dh3rlfc24ybjp" path="res://script/peluru.gd" id="1_0h6eq"]
+[ext_resource type="Texture2D" uid="uid://cn1ou4dw6lwea" path="res://assets/peluru.png" id="2_yi52b"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xrivr"]
+radius = 15.033297
+
+[node name="peluru" type="Area2D" unique_id=1642312265]
+script = ExtResource("1_0h6eq")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1898480859]
+position = Vector2(4.7683716e-07, 2.3841858e-07)
+scale = Vector2(0.65667725, 0.5690918)
+texture = ExtResource("2_yi52b")
+hframes = 8
+vframes = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=532221400]
+position = Vector2(-1, 0)
+shape = SubResource("CircleShape2D_xrivr")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -13,12 +13,10 @@ func _ready():
 	screen_size = get_window().size
 	ground_height = $Ground.get_node("Sprite2D").texture.get_height()
 
-	# Modul Procedural Generation
 	$ObstacleSpawner.setup(screen_size, ground_height)
 	$ObstacleSpawner.obstacle_hit.connect(bird_hit)
 	$ObstacleSpawner.obstacle_scored.connect(scored)
 
-	# Aman walau sinyal restart sudah disambung lewat editor
 	if not $GameOver.restart.is_connected(_on_game_over_restart):
 		$GameOver.restart.connect(_on_game_over_restart)
 
@@ -33,6 +31,8 @@ func new_game():
 	$Ground.position.x = 0
 	EventBus.game_ready.emit()
 	$Bird.reset()
+	if has_node("musuh"):
+		$musuh.reset()
 
 
 func _input(event):
@@ -81,7 +81,7 @@ func check_top():
 func stop_game():
 	if game_over:
 		return
-	var is_new_best := SaveManager.submit_score(score)
+	var is_new_best = SaveManager.submit_score(score)
 	AudioManager.play_sfx("hit")
 	AudioManager.stop_music()
 	Fx.flash($Bird/AnimatedSprite2D)
