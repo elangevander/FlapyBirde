@@ -7,11 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://cjajj7in1jgf8" path="res://scene/ground.tscn" id="4_brvut"]
 [ext_resource type="PackedScene" uid="uid://by0h2lvk3x1qm" path="res://scene/game_over.tscn" id="6_4j5ol"]
 [ext_resource type="PackedScene" uid="uid://blpl32rkay75h" path="res://scene/hud.tscn" id="7_p1hux"]
+[ext_resource type="Script" uid="uid://chb7t3ne8weip" path="res://script/obstacle_spawner.gd" id="8_b5f6u"]
 [ext_resource type="Script" uid="uid://db180pxvaw3br" path="res://script/hud.gd" id="8_of57s"]
+[ext_resource type="PackedScene" uid="uid://cjpolshif7pr0" path="res://scene/moving_pipe.tscn" id="10_tqoya"]
 
 [node name="Main" type="Node" unique_id=1559043077]
 script = ExtResource("1_0ha60")
-pipe_scene = ExtResource("2_0ha60")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=517944429]
 texture = ExtResource("1_ig7tw")
@@ -23,14 +24,14 @@ position = Vector2(28, 29)
 [node name="Ground" parent="." unique_id=701539437 instance=ExtResource("4_brvut")]
 z_index = 1
 
-[node name="PipeTimer" type="Timer" parent="." unique_id=41904451]
-wait_time = 1.5
-
 [node name="GameOver" parent="." unique_id=1097415702 instance=ExtResource("6_4j5ol")]
 
 [node name="HUD" parent="." unique_id=1479293431 instance=ExtResource("7_p1hux")]
 script = ExtResource("8_of57s")
 
+[node name="ObstacleSpawner" type="Node" parent="." unique_id=1750765335]
+script = ExtResource("8_b5f6u")
+obstacle_scenes = Array[PackedScene]([ExtResource("2_0ha60"), ExtResource("10_tqoya")])
+
 [connection signal="hit" from="Ground" to="." method="_on_ground_hit"]
-[connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]
 [connection signal="restart" from="GameOver" to="." method="_on_game_over_restart"]

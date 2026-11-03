@@ -1,27 +1,30 @@
 extends Node
 
-@export var pipe_scene : PackedScene
-
 var game_running : bool
-var game_over : bool 
+var game_over : bool
 var scroll
 var score
 var SCROLL_SPEED : int = 4
 var screen_size : Vector2i
-var ground_height : int 
-var pipes : Array
-const PIPE_DELAY : int = 100
-const PIPE_RANGE : int = 200
+var ground_height : int
+
 
 func _ready():
-	print("1 ready mulai")
 	screen_size = get_window().size
-	print("2 screen_size ok")
 	ground_height = $Ground.get_node("Sprite2D").texture.get_height()
-	print("3 ground ok")
+
+	# Modul Procedural Generation
+	$ObstacleSpawner.setup(screen_size, ground_height)
+	$ObstacleSpawner.obstacle_hit.connect(bird_hit)
+	$ObstacleSpawner.obstacle_scored.connect(scored)
+
+	# Aman walau sinyal restart sudah disambung lewat editor
+	if not $GameOver.restart.is_connected(_on_game_over_restart):
+		$GameOver.restart.connect(_on_game_over_restart)
+
 	new_game()
-	print("4 selesai")
-	
+
+
 func new_game():
 	game_running = false
 	game_over = false
@@ -29,11 +32,9 @@ func new_game():
 	scroll = 0
 	$Ground.position.x = 0
 	EventBus.game_ready.emit()
-	get_tree().call_group("pipes", "queue_free")
-	pipes.clear()
-	generate_pipes()
 	$Bird.reset()
-	
+
+
 func _input(event):
 	if event is InputEventKey and event.pressed and event.keycode == KEY_M:
 		AudioManager.toggle_mute()
@@ -47,49 +48,36 @@ func _input(event):
 						$Bird.flap()
 						check_top()
 
+
 func start_game():
 	AudioManager.play_music()
 	game_running = true
 	$Bird.flying = true
 	EventBus.game_started.emit()
 	$Bird.flap()
-	$PipeTimer.start()
-	
-func _process(delta):
+
+
+func _process(_delta):
 	if game_running:
 		scroll += SCROLL_SPEED
 		if scroll >= screen_size.x:
 			scroll = 0
 		$Ground.position.x = -scroll
-		for pipe in pipes.duplicate():
-			pipe.move(SCROLL_SPEED)
-			if pipe.is_offscreen():
-				pipes.erase(pipe)
-				pipe.queue_free()
+		$ObstacleSpawner.scroll(SCROLL_SPEED)
 
 
-func _on_pipe_timer_timeout():
-	generate_pipes()
-
-func generate_pipes():
-	var pipe = pipe_scene.instantiate()
-	pipe.position.x = screen_size.x + PIPE_DELAY
-	pipe.position.y = (screen_size.y - ground_height) / 2 + randi_range(-PIPE_RANGE, PIPE_RANGE)
-	pipe.hit.connect(bird_hit)
-	pipe.scored.connect(scored)
-	add_child(pipe)
-	pipes.append(pipe)
-	
 func scored():
 	score += 1
-	EventBus.score_changed.emit(score)
 	AudioManager.play_sfx("score")
-	
+	EventBus.score_changed.emit(score)
+
+
 func check_top():
 	if $Bird.position.y < 0:
 		$Bird.falling = true
 		stop_game()
-	
+
+
 func stop_game():
 	if game_over:
 		return
@@ -97,17 +85,18 @@ func stop_game():
 	AudioManager.play_sfx("hit")
 	AudioManager.stop_music()
 	Fx.flash($Bird/AnimatedSprite2D)
-	$PipeTimer.stop()
-	EventBus.game_ended.emit(score, SaveManager.high_score, is_new_best)
 	$Bird.flying = false
 	game_running = false
 	game_over = true
+	EventBus.game_ended.emit(score, SaveManager.high_score, is_new_best)
+
 
 func bird_hit():
 	if game_over:
 		return
 	$Bird.falling = true
 	stop_game()
+
 
 func _on_ground_hit():
 	$Bird.falling = false
